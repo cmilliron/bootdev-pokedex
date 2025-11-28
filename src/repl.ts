@@ -1,5 +1,7 @@
 import { stdin, stdout } from "process";
 import { createInterface } from "readline";
+import { commandExit } from "./command_exit.js";
+import { commandHelp } from "./command_help.js";
 
 export function cleanInput(input: string): string[] {
   const items = input.toLowerCase().trim().split(" ");
@@ -17,11 +19,20 @@ export function startREPL() {
   rl.on("line", (input) => {
     const cleanedInput = cleanInput(input);
     if (cleanedInput.length > 0 && cleanedInput) {
-      console.log(`Your command was: ${cleanedInput[0]}`);
+      const command = cleanedInput[0];
+      switch (command) {
+        case "help":
+          commandHelp();
+          break;
+        case "exit":
+          commandExit();
+          break;
+        default:
+          console.log(`Unknown command`);
+      }
     }
     rl.prompt();
   }).on("close", () => {
-    console.log("Pokedex closing down....");
-    process.exit();
+    commandExit();
   });
 }
