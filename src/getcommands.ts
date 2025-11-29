@@ -10,7 +10,7 @@ export const commands = {
   },
   help: {
     name: "help",
-    description: "command line help",
+    description: "Command line help",
     callback: commandHelp,
   },
   // can add more commands here
