@@ -9,7 +9,7 @@ export type CLICommand = {
   name: string;
   description: string;
   //   callback: (commands: Record<string, CLICommand>) => void;
-  callback: () => void;
+  callback: (state: State) => void;
 };
 
 export const commands = {

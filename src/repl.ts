@@ -15,12 +15,10 @@ export function startREPL() {
         const command = cleanedInput[0];
         switch (command) {
           case "help":
-            programState.commands.help.callback();
+            programState.commands.help.callback(programState);
             break;
           case "exit":
-            // commandExit();
-            programState.commands.exit.callback();
-            programState.rl.close();
+            programState.commands.exit.callback(programState);
             break;
           default:
             console.log(`Unknown command`);
@@ -29,6 +27,6 @@ export function startREPL() {
       programState.rl.prompt();
     })
     .on("close", () => {
-      programState.commands.exit.callback();
+      // programState.commands.exit.callback(programState);
     });
 }
