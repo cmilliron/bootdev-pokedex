@@ -9,20 +9,25 @@ export function startREPL() {
   const programState = initState();
   programState.rl.prompt();
   programState.rl
-    .on("line", (input) => {
+    .on("line", async (input) => {
       const cleanedInput = cleanInput(input);
       if (cleanedInput.length > 0 && cleanedInput) {
         const command = cleanedInput[0];
-        switch (command) {
-          case "help":
-            programState.commands.help.callback(programState);
-            break;
-          case "exit":
-            programState.commands.exit.callback(programState);
-            break;
-          default:
-            console.log(`Unknown command`);
+        try {
+          await programState.commands[command].callback(programState);
+        } catch (error) {
+          console.log("unkonw command");
         }
+        // switch (command) {
+        //   case "help":
+        //     programState.commands.help.callback(programState);
+        //     break;
+        //   case "exit":
+        //     programState.commands.exit.callback(programState);
+        //     break;
+        //   default:
+        //     console.log(`Unknown command`);
+        // }
       }
       programState.rl.prompt();
     })
