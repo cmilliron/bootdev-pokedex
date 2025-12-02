@@ -51,17 +51,16 @@ export type State = {
   prevLocationsURL: string | null;
 };
 
-export function initState(): State {
+export function initState(cacheInterval: number): State {
   const rl = createInterface({
     input: process.stdin,
     output: process.stdout,
     prompt: "Pokedex > ",
   });
-  const pokeAPI = new PokeAPI();
   const state = {
     rl: rl,
     commands: getCommands(),
-    pokeAPI: new PokeAPI(),
+    pokeAPI: new PokeAPI(cacheInterval),
     nextLocationsURL: "",
     prevLocationsURL: "",
   };
