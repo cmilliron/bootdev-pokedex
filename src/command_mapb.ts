@@ -9,6 +9,6 @@ export async function commandMapB(state: State) {
       console.log(location.name);
     }
   } catch (error) {
-    console.log("There was an error fetching your data. Try again later.");
+    console.log(`${error}`);
   }
 }

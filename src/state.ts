@@ -6,13 +6,14 @@ import { commandHelp } from "./command_help.js";
 import { commandExit } from "./command_exit.js";
 import { commandMap } from "./command_map.js";
 import { commandMapB } from "./command_mapb.js";
+import { commandExplore } from "./command_explore.js";
 import { PokeAPI } from "./pokeAPI.js";
 
 export type CLICommand = {
   name: string;
   description: string;
   //   callback: (commands: Record<string, CLICommand>) => void;
-  callback: (state: State) => Promise<void>;
+  callback: (state: State, ...args: string[] ) => Promise<void>;
 };
 
 export const commands = {
@@ -36,6 +37,11 @@ export const commands = {
     description: "List the previous 20 location areas in teh Pokemon world",
     callback: commandMapB,
   },
+  explore: {
+    name: "explore",
+    description: "Allows for a location to explore an area",
+    callback: commandExplore,
+  }
   // can add more commands here
 };
 

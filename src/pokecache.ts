@@ -30,10 +30,10 @@ export class Cache {
   }
 
   #reap() {
-    // console.log("in Reap", this.#cache.size);
+    console.log("in Reap", this.#cache.size);
     for (let key of this.#cache.keys()) {
       const cacheItem = this.#cache.get(key);
-      //   console.log("Debuing", cacheItem?.createdAt);
+        console.log("Debuing", cacheItem?.createdAt);
       if (cacheItem) {
         if (cacheItem.createdAt < Date.now() - this.#interval) {
           this.#cache.delete(key);

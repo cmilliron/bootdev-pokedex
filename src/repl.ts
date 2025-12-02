@@ -11,9 +11,9 @@ export function startREPL(state: State) {
     .on("line", async (input) => {
       const cleanedInput = cleanInput(input);
       if (cleanedInput.length > 0 && cleanedInput) {
-        const command = cleanedInput[0];
+        const [command, ...args ] = cleanedInput;
         try {
-          await state.commands[command].callback(state);
+          await state.commands[command].callback(state, ...args);
         } catch (error) {
           console.log("unkonw command");
         }

@@ -14,20 +14,22 @@ export class PokeAPI {
 
   async fetchLocations(pageURL?: string | null): Promise<ShallowLocations> {
     const fullURL = pageURL || PokeAPI.baseURL + "/location-area";
+    // console.log(fullURL);
     const cacheValue = this.cache.get<ShallowLocations>(fullURL);
     if (cacheValue) {
       console.log("cache");
       return cacheValue;
     }
     try {
+      console.log("fetch")
       const rawResponse = await fetch(fullURL, {
         method: "GET",
       });
-      console.log("fetch");
-      const response = await rawResponse.json();
-      if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`);
+      if (!rawResponse.ok) {
+        throw new Error(`${rawResponse.status} ${rawResponse.statusText}`);
       }
+      const response = await rawResponse.json();
+      // console.log(response)
       this.cache.add(fullURL, response);
       return response;
     } catch (error) {
@@ -37,19 +39,22 @@ export class PokeAPI {
 
   async fetchLocation(locationName: string): Promise<Location> {
     const fullURL = `${PokeAPI.baseURL}/location-area/${locationName}`;
+    console.log(fullURL)
     const cacheValue = this.cache.get<Location>(fullURL);
     if (cacheValue) {
+      console.log('cache')
       return cacheValue;
     }
     try {
       const rawResponse = await fetch(fullURL, {
         method: "GET",
       });
-      const response = await rawResponse.json();
-      if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`);
+      if (!rawResponse.ok) {
+        throw new Error(`${rawResponse.status} ${rawResponse.statusText}`);
       }
+      const response = await rawResponse.json();
       this.cache.add(fullURL, response);
+      console.log('fetch')
       return response;
     } catch (error) {
       throw new Error(`Error fetching location: ${(error as Error).message}`);
