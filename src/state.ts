@@ -7,6 +7,7 @@ import { commandExit } from "./command_exit.js";
 import { commandMap } from "./command_map.js";
 import { commandMapB } from "./command_mapb.js";
 import { commandExplore } from "./command_explore.js";
+import { commandCatch } from "./command_catch.js";
 import { PokeAPI } from "./pokeAPI.js";
 
 export type CLICommand = {
@@ -41,6 +42,11 @@ export const commands = {
     name: "explore <location_name>",
     description: "Allows for a location to explore an area",
     callback: commandExplore,
+  },
+  catch: {
+    name: "catch <pokemon>",
+    description: "Allows you to try to catch pokemon",
+    callback: commandCatch,
   }
   // can add more commands here
 };

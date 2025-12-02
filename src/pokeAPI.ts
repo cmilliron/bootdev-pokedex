@@ -1,4 +1,5 @@
 import { Cache, CacheEntry } from "./pokecache.js";
+import type { Pokemon } from "./pokemon_type.ts";
 
 export class PokeAPI {
   private static readonly baseURL = "https://pokeapi.co/api/v2";
@@ -55,6 +56,31 @@ export class PokeAPI {
       const response = await rawResponse.json();
       this.cache.add(fullURL, response);
       console.log('fetch')
+      return response;
+    } catch (error) {
+      throw new Error(`Error fetching location: ${(error as Error).message}`);
+    }
+  }
+
+  async fetchPokemon(pokemon: string): Promise<Pokemon> {
+    const fullURL = `${PokeAPI.baseURL}/pokemon/${pokemon}`;
+        console.log(fullURL)
+    const cacheValue = this.cache.get<Pokemon>(fullURL);
+    if (cacheValue) {
+      console.log('cache')
+      return cacheValue;
+    }
+    try {
+      const rawResponse = await fetch(fullURL, {
+        method: "GET",
+      });
+      if (!rawResponse.ok) {
+        throw new Error(`${rawResponse.status} ${rawResponse.statusText}`);
+      }
+      const response = await rawResponse.json();
+      this.cache.add(fullURL, response);
+      console.log('fetch');
+      console.log(fetch);
       return response;
     } catch (error) {
       throw new Error(`Error fetching location: ${(error as Error).message}`);
@@ -124,3 +150,4 @@ export type Location = {
     }[];
   }[];
 };
+
