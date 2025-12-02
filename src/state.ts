@@ -38,7 +38,7 @@ export const commands = {
     callback: commandMapB,
   },
   explore: {
-    name: "explore",
+    name: "explore <location_name>",
     description: "Allows for a location to explore an area",
     callback: commandExplore,
   }

@@ -17,16 +17,6 @@ export function startREPL(state: State) {
         } catch (error) {
           console.log("unkonw command");
         }
-        // switch (command) {
-        //   case "help":
-        //     state.commands.help.callback(state);
-        //     break;
-        //   case "exit":
-        //     state.commands.exit.callback(state);
-        //     break;
-        //   default:
-        //     console.log(`Unknown command`);
-        // }
       }
       state.rl.prompt();
     })
