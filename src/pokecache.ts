@@ -10,7 +10,7 @@ export class Cache {
 
   constructor(interval: number) {
     this.#interval = interval;
-    this.#startReadLoop();
+    this.#startReapLoop();
   }
 
   add<T>(key: string, val: T) {
@@ -21,16 +21,19 @@ export class Cache {
     this.#cache.set(key, cacheEntry);
   }
 
-  get<T>(key: string): CacheEntry<T> | undefined {
+  get<T>(key: string): T | undefined {
     if (this.#cache.has(key)) {
-      return this.#cache.get(key);
+      const cacheItem: CacheEntry<T> = this.#cache.get(key) as CacheEntry<T>;
+      return cacheItem.val;
     }
     return undefined;
   }
 
   #reap() {
-    for (let key in this.#cache) {
-      const cacheItem = this.get(key);
+    // console.log("in Reap", this.#cache.size);
+    for (let key of this.#cache.keys()) {
+      const cacheItem = this.#cache.get(key);
+      //   console.log("Debuing", cacheItem?.createdAt);
       if (cacheItem) {
         if (cacheItem.createdAt < Date.now() - this.#interval) {
           this.#cache.delete(key);
@@ -39,11 +42,11 @@ export class Cache {
     }
   }
 
-  #startReadLoop() {
-    this.#reapIntervalId = setInterval(this.#reap, this.#interval);
+  #startReapLoop() {
+    this.#reapIntervalId = setInterval(() => this.#reap(), this.#interval);
   }
 
-  stopReadLoop() {
+  stopReapLoop() {
     clearInterval(this.#reapIntervalId);
     this.#reapIntervalId = undefined;
   }
