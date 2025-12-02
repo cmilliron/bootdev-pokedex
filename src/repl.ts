@@ -3,35 +3,34 @@
 import { commandExit } from "./command_exit.js";
 import { commandHelp } from "./command_help.js";
 import { cleanInput } from "./helper/clean_input.js";
-import { initState } from "./state.js";
+import { initState, State } from "./state.js";
 
-export function startREPL() {
-  const programState = initState();
-  programState.rl.prompt();
-  programState.rl
+export function startREPL(state: State) {
+  state.rl.prompt();
+  state.rl
     .on("line", async (input) => {
       const cleanedInput = cleanInput(input);
       if (cleanedInput.length > 0 && cleanedInput) {
         const command = cleanedInput[0];
         try {
-          await programState.commands[command].callback(programState);
+          await state.commands[command].callback(state);
         } catch (error) {
           console.log("unkonw command");
         }
         // switch (command) {
         //   case "help":
-        //     programState.commands.help.callback(programState);
+        //     state.commands.help.callback(state);
         //     break;
         //   case "exit":
-        //     programState.commands.exit.callback(programState);
+        //     state.commands.exit.callback(state);
         //     break;
         //   default:
         //     console.log(`Unknown command`);
         // }
       }
-      programState.rl.prompt();
+      state.rl.prompt();
     })
     .on("close", () => {
-      // programState.commands.exit.callback(programState);
+      // state.commands.exit.callback(state);
     });
 }
