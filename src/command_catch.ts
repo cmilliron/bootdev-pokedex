@@ -23,7 +23,7 @@ export async function commandCatch(state: State, ...args: string[]) {
       Math.round(Math.random() * pokemon.base_experience);
     console.log(`Chance of Catching Pokemon: ${catchChance}`);
     if (catchChance > pokemon.base_experience) {
-      console.log(`You caught ${pokemon.name}`);
+      console.log(`You caught ${pokemon.name}\n You may now inspect it with the inspect command.`);
       state.pokedex[pokemon.name] = pokemon;
     } else console.log("Pokemon got away.");
   } catch (error) {
