@@ -16,6 +16,7 @@ export async function commandCatch(state: State, ...args: string[]) {
   try {
     const pokemon = await state.pokeAPI.fetchPokemon(args[0]);
     // console.log(response)
+    console.log(`Throwing a Pokeball at ${args[0]}...`);
     console.log(`Base Experience of pokemon: ${pokemon.base_experience}`);
     const catchChance =
       pokemon.base_experience / 2 +

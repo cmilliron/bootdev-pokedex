@@ -8,8 +8,10 @@ import { commandMap } from "./command_map.js";
 import { commandMapB } from "./command_mapb.js";
 import { commandExplore } from "./command_explore.js";
 import { commandCatch } from "./command_catch.js";
+import { commandDisplayPokedex } from "./command_pokedex.js";
 import { PokeAPI } from "./pokeAPI.js";
 import { Pokemon } from "./pokemon_type.js";
+import { commandInspect } from "./command_inspect.js";
 
 export type CLICommand = {
   name: string;
@@ -50,6 +52,16 @@ export const commands = {
     name: "catch <pokemon>",
     description: "Allows you to try to catch pokemon",
     callback: commandCatch,
+  },
+  inspect: {
+    name: "inspect <pokemon>",
+    description: "Allows you to try to inspect a pokemon",
+    callback: commandInspect,
+  },
+  pokedex: {
+    name: "pokedex",
+    description: "Allows you to display your pokedex",
+    callback: commandDisplayPokedex,
   },
   // can add more commands here
 };
