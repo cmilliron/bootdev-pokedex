@@ -9,13 +9,16 @@ import { commandMapB } from "./command_mapb.js";
 import { commandExplore } from "./command_explore.js";
 import { commandCatch } from "./command_catch.js";
 import { PokeAPI } from "./pokeAPI.js";
+import { Pokemon } from "./pokemon_type.js";
 
 export type CLICommand = {
   name: string;
   description: string;
   //   callback: (commands: Record<string, CLICommand>) => void;
-  callback: (state: State, ...args: string[] ) => Promise<void>;
+  callback: (state: State, ...args: string[]) => Promise<void>;
 };
+
+export type Pokedex = Record<string, Pokemon>;
 
 export const commands = {
   exit: {
@@ -47,7 +50,7 @@ export const commands = {
     name: "catch <pokemon>",
     description: "Allows you to try to catch pokemon",
     callback: commandCatch,
-  }
+  },
   // can add more commands here
 };
 
@@ -61,6 +64,7 @@ export type State = {
   pokeAPI: PokeAPI;
   nextLocationsURL: string | null;
   prevLocationsURL: string | null;
+  pokedex: Record<string, Pokemon>;
 };
 
 export function initState(cacheInterval: number): State {
@@ -75,6 +79,7 @@ export function initState(cacheInterval: number): State {
     pokeAPI: new PokeAPI(cacheInterval),
     nextLocationsURL: "",
     prevLocationsURL: "",
+    pokedex: {},
   };
   return state;
 }
